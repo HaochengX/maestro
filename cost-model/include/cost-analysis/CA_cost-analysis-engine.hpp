@@ -319,7 +319,7 @@ namespace maestro {
             } // End of if(cluster_idx < num_cluster_lvs-1)
             else { // Base cluster
               computation_delay =static_cast<long>(
-                  std::ceil(static_cast<double>(num_partial_sums) / static_cast<double>(num_simd_lanes_)));
+                  std::ceil(5 * static_cast<double>(num_partial_sums) / static_cast<double>(num_simd_lanes_)));
             }
             ////////////////////////////
 
