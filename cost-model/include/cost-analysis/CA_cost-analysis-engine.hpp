@@ -251,7 +251,6 @@ namespace maestro {
             }
 
             ////////////////////////////
-
             long computation_delay = 0;
             std::shared_ptr<std::vector<std::shared_ptr<CA::CostAnalyisResults>>> sub_cluster_results = std::make_shared<std::vector<std::shared_ptr<CA::CostAnalyisResults>>>();
 
@@ -318,8 +317,8 @@ namespace maestro {
 
             } // End of if(cluster_idx < num_cluster_lvs-1)
             else { // Base cluster
-              computation_delay =static_cast<long>(
-                  std::ceil(5 * static_cast<double>(num_partial_sums) / static_cast<double>(num_simd_lanes_)));
+              computation_delay =50 * static_cast<long>(
+                  std::ceil(static_cast<double> (num_partial_sums) / static_cast<double>(num_simd_lanes_)));
             }
             ////////////////////////////
 

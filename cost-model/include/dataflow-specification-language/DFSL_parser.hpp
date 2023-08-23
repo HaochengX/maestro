@@ -337,6 +337,16 @@ namespace maestro {
                     }
                     layer_type = LayerType::NGCONV;
                   }
+                  else if(tkn == DFSL::layer_type_fused_qkv_) {
+                    if(!tmp_name.empty()) {
+                      curr_layer = std::make_shared<DFA::Fused_QKV>(tmp_name);
+                      tmp_name.clear();
+                    }
+                    else {
+                      curr_layer = std::make_shared<DFA::Fused_QKV>(DFSL::layer_decl_);
+                    }
+                    layer_type = LayerType::Fused_QKV;
+                  }
                   else if(tkn == DFSL::layer_type_lstm_) {
                     //TODO
                   }

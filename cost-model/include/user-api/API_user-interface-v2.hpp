@@ -532,6 +532,24 @@ namespace maestro {
             output_coupled_vars = {"M", "N"};
             break;
           }
+          case (LayerType::Fused_QKV): {
+            input_coupled_vars =  {"M", "K"};
+            weight_coupled_vars = {"K", "N"};
+            output_coupled_vars = {"M", "N"};
+            break;
+          }         
+          case (LayerType::Op1): {
+            input_coupled_vars =  {"M", "K"};
+            weight_coupled_vars = {"K", "N"};
+            output_coupled_vars = {"M", "N"};
+            break;
+          }
+          case (LayerType::Op2): {
+            input_coupled_vars =  {"M", "K"};
+            weight_coupled_vars = {"K", "N"};
+            output_coupled_vars = {"M", "N"};
+            break;
+          }
           case (LayerType::CONV):
           default : {
             if(batch_processing) {
@@ -672,6 +690,27 @@ namespace maestro {
               }
               break;
             }
+            case (LayerType::Fused_QKV) : {
+              for(auto dim : *dimensions) {
+                auto dimtbl_entry = std::make_shared<DFA::LayerDimension>(dim->GetName(), dim->GetSize(), dim->GetOuterStride(), dim->GetInnerStride());
+                dimension_table->AddDimension(dimtbl_entry);
+              }
+              break;
+            }
+            case (LayerType::Op1) : {
+              for(auto dim : *dimensions) {
+                auto dimtbl_entry = std::make_shared<DFA::LayerDimension>(dim->GetName(), dim->GetSize(), dim->GetOuterStride(), dim->GetInnerStride());
+                dimension_table->AddDimension(dimtbl_entry);
+              }
+              break;
+            }
+            case (LayerType::Op2) : {
+              for(auto dim : *dimensions) {
+                auto dimtbl_entry = std::make_shared<DFA::LayerDimension>(dim->GetName(), dim->GetSize(), dim->GetOuterStride(), dim->GetInnerStride());
+                dimension_table->AddDimension(dimtbl_entry);
+              }
+              break;
+            }
             default: {
             }
         }
@@ -740,6 +779,36 @@ namespace maestro {
               break;
             }
             case (LayerType::GEMM): {
+              if(tensor_info_mapping_table_->find(layer_type) == tensor_info_mapping_table_->end()) {
+                tensor_info_idx = ConfigConvTensors(layer_type, false);
+                (*tensor_info_mapping_table_)[layer_type] = tensor_info_idx;
+              }
+              else {
+                tensor_info_idx = (*tensor_info_mapping_table_)[layer_type];
+              }
+              break;
+            }            
+            case (LayerType::Fused_QKV): {
+              if(tensor_info_mapping_table_->find(layer_type) == tensor_info_mapping_table_->end()) {
+                tensor_info_idx = ConfigConvTensors(layer_type, false);
+                (*tensor_info_mapping_table_)[layer_type] = tensor_info_idx;
+              }
+              else {
+                tensor_info_idx = (*tensor_info_mapping_table_)[layer_type];
+              }
+              break;
+            }
+            case (LayerType::Op1): {
+              if(tensor_info_mapping_table_->find(layer_type) == tensor_info_mapping_table_->end()) {
+                tensor_info_idx = ConfigConvTensors(layer_type, false);
+                (*tensor_info_mapping_table_)[layer_type] = tensor_info_idx;
+              }
+              else {
+                tensor_info_idx = (*tensor_info_mapping_table_)[layer_type];
+              }
+              break;
+            }
+            case (LayerType::Op2): {
               if(tensor_info_mapping_table_->find(layer_type) == tensor_info_mapping_table_->end()) {
                 tensor_info_idx = ConfigConvTensors(layer_type, false);
                 (*tensor_info_mapping_table_)[layer_type] = tensor_info_idx;
