@@ -4,7 +4,7 @@ Constant SzK 100;
 Network Test {
 	Layer CONV1 {
 		Type: Fused_QKV
-		Dimensions { K: SzK, M: SzM, N: SzN }
+		Dimensions { G: 64, K: SzK, M: SzM, N: SzN }
 		Dataflow {
 			TemporalMap(1,1) M;
 			SpatialMap(1,1) N;

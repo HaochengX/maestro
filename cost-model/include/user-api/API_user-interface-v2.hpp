@@ -533,9 +533,9 @@ namespace maestro {
             break;
           }
           case (LayerType::Fused_QKV): {
-            input_coupled_vars =  {"M", "K"};
+            input_coupled_vars =  {"G","M", "K"};
             weight_coupled_vars = {"K", "N"};
-            output_coupled_vars = {"M", "N"};
+            output_coupled_vars = {"G","M", "N"};
             break;
           }         
           case (LayerType::Op1): {
